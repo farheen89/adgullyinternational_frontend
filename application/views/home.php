@@ -507,7 +507,7 @@
 
 	.post__img {
       width: 100%;
-      height: auto;
+      height: 150px;
       max-height: 400px;
 	}
 
