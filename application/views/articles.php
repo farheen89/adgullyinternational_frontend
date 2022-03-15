@@ -1,4 +1,4 @@
-  <?php  if(count($data)>0){ echo count($data);
+  <?php  if(count($data)>0){ 
                   $rows = ceil(count($data) / 3);
                   $lists  = array_chunk($data, $rows);
 

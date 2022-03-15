@@ -51,7 +51,7 @@ class Home_model extends CI_Model
 		    $offset = 10*$page;
 		    $limit = 10;
 		   
-		    echo $sql = 'SELECT
+		     $sql = 'SELECT
         	 a.id, 
         	 a.title as title, 
         	 a.content as content ,
