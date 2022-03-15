@@ -60,7 +60,7 @@
          	};
 
          var t = document.getElementsByTagName('script')[0]; t.parentNode.insertBefore(s, t);
-         })();
+         })(); 
 
       </script>
 
@@ -165,7 +165,8 @@
                                  <div class="search-form">
                                     <form action="https://www.hse.ru/en/search/index.html">
                                        <div class="search-form__button"><button class="button button_grey">Search</button></div>
-                                       <div class="search-form__input"><input class="input input100 input_mr" type="text" name="text" placeholder="Search"><input type="hidden" name="searchid" value="2284688"><input type="hidden" name="simple" value="1"></div>
+                                       <div class="search-form__input"><input class="input input100 input_mr" type="text" name="text" placeholder="Search"><input type="hidden" name="searchid" value="2284688">
+                                          <input type="hidden" name="simple" value="1"></div>
                                     </form>
                                  </div>
                                  <div class="popup__block popup__block_indent"><a class="link_dark" href="https://www.hse.ru/search/search.html?simple=0">Advanced search</a><span class="b-adv-search"></span></div>
@@ -321,8 +322,39 @@
 
             </div>
          </header>
+<script>
+  $(document).ready(function(){ $(".load_more").val(0);  
+    getarticle(0);
+    $("#loadmore").click(function(e){ 
+      e.preventDefault(); $("#load_more").val(0); 
 
+      var load_more_value = parseInt($(".load_more").val()) +1;  
+      getarticle(load_more_value);
+    });
+  });
+  var getarticle = function(page){
+   var load_more_value = parseInt($(".load_more").val()) +1; 
+    $.ajax({
+      url:"<?php echo base_url() ?>home/getArticle",
+      type:'GET',
+      data: {page:page}
+    }).done(function(response){
+      console.log(response);
+      if(response==1){ $("#loadmore").hide();}
+      $("#test_div").append(response); 
+      $(".load_more").val(load_more_value); 
+      //scroll();
+    });
+  };
+/*  var scroll  = function(){
+    $('html, body').animate({
+      scrollTop: $('#load_more').offset().top
+    }, 1000);
+  };*/
+</script>
          <script>
+
+
             $(function(){
                $('.mp-menu__arrow_open').click(function(){
                	$(this).next('.mp-menu__sub_secondary').css('left', '0').addClass('active');
@@ -330,81 +362,20 @@
                $('.mp-menu__arrow_close').click(function(){
                	$(this).closest('.mp-menu__sub_secondary').css('left', '110%').removeClass('active');
                });
-            });
-         </script>
+
+              /* $("#loadmore").click(function(){ 
+                  $("#load_more_data").show();
+                  $("#test_div").append('<div class="column__item">  <ul class="post"> <li class="post__item"> <a class="link_no-underline post__img_href" href="news/admission/562402484.html"><img class="post__img" src="<?php echo base_url();?>pubs/share/thumb/562402645_c798x427+2+26_r433x232%21.jpg" alt="Applications for Study Tour Experience Close February 13"></a> <h3 class=" post__title"><a href="news/admission/562402484.html">Applications for Study Tour Experience Close February 13</a></h3 <div class="post__descr"> <p>In December 2021, the HSE ISSEK English-language Master&rsquo;s programme in Governance of Science, Technology and Innovation became one of three ADgully management programmes to receive European accreditation by the European Foundation for Management Development. We spoke to Dirk Meissner...</p>  </div>  <div class="tag-set" <a class="link link_no-underline rubric rubric_9" href="news/admission/index.html"> <span>Admissions</span> </a> <a class="link link_no-underline tag" href="news/tags/ideas/index.html" title="ideas &amp; experience"  style="background-color: #ffc208;color: black;border: 1px solid #857b5e;">  <span class="rubric__inner" >ideas &amp; experience</span>  </a>  <a class="link link_no-underline tag" href="news/tags/ma/index.html" title="master" <span class=" ">research projects</span> </a> <a class="" title="masters programmes "> <span class="rubric__inner">masters</span> </a>   </div>   </li> <li class="post__item"> <a class=""><img class="post__img" src="" alt="HSE ISSEK&amp;rsquo;s Newly Accredited Master&amp;rsquo;s in Management: &amp;lsquo;It&amp;rsquo;s Challenging, but It Pays Off in the End&amp;rsquo;"></a>   <h3 class=" post__title"><a href="">Applications for Study Tour Experience Close February 13</a></h3> <div class="post__descr">  <p>In December 2021, the HSE ISSEK English-language Master&rsquo;s programme in Governance of Science, Technology and Innovation became one of three ADgully management programmes to receive European accreditation by the European Foundation for Management Development We spoke to Dirk Meissner /p>   </div>  <div class="tag-set">  <a class="link link_no-underline rubric rubric_9" href="">   <span>Admissions</span>   </a>  </div>  </li>  </ul> </div>'); 
+               }); */
+            });  </script>
 
          <div class="layout">
 
             <section class="section" style="padding-top: 0px;">
 
-               <div class="column column-3">
-
-                  <?php 
-                  $rows = ceil(count($data) / 3);
-                  $lists  = array_chunk($data, $rows);
-
-                  foreach ( $lists as $column) {
-                     ?>
-                  <div class="column__item">
-                     <ul class="post">
-                        <?php foreach ($column as $item) {
-                             $path =  (isset($item['image_path']) && ($item['image_path']!=NULL)) ? base_url().'ajax_upload/'.$item['image_path'].'.png' :    base_url().'pubs/share/thumb/562402645_c798x427+2+26_r433x232%21.jpg'; 
-                         ?> 
-                           <li class="post__item">
-                           <a class="link_no-underline post__img_href" href="news/admission/562402484.html"><img class="post__img" src="<?php echo $path; ?> " alt="Applications for Study Tour Experience Close February 13"></a>
-                           <h3 class=" post__title"><a href="news/admission/562402484.html">
-                            
-                                 <?php 
-                                 echo $item['title'];
-                                // echo $title = strlen($item['title']) > 50 ? substr($item['title'],0,50)."..." : $item['title'];
-                                 ?>
-
-                              </a></h3>
-                           <div class="post__descr" >
-                              <p>
-                                 <?php echo $item['content'];
-                                 echo $content = strlen($item['content']) > 500 ? substr($item['content'],0,500)."..." : $item['content'];
-                                 ?>
-                                    
-                              </p>
-                           </div>
-                            <div class="tag-set">
-                                 <a class="link link_no-underline rubric rubric_9" href="news/admission/index.html">
-                                    <span><?php  echo isset($item['category']) ? ucfirst($item['category']) : '';?></span>
-                                 </a>
-                                 <a class="link link_no-underline tag" href="news/tags/ideas/index.html" title="ideas &amp; experience" 
-                                    style="background-color: #ffc208;color: black;border: 1px solid #857b5e;">
-                                    <span class="rubric__inner" ><?php echo isset($item['subcategory']) ? ucfirst($item['subcategory']) : '';?></span>
-                                 </a>
-
-                                 <?php 
-                                 foreach($tags as $tag){ 
-                                    if($tag['article_id']==$item['id']){?>
-                                           <a class="link link_no-underline tag" href="news/tags/ma/index.html" title="master's programmes ">
-                                    <span class="rubric__inner"><?php echo $tag['title'];?></span>
-                                 </a>
-                                    <?php }
-
-                                 }
-                                 ?> 
-                                 <a class="link link_no-underline tag date_tag" href="news/tags/ideas/index.html" title="February 10 ,2022">
-                                    <span class="rubric__inner"><?php echo date('F d ,Y',strtotime($item['publish_datetime']));?></span>
-                                 </a>
-                           </div>
-                        </li>
-                        <?php } ?>
-                       
-                           
-                     </ul>
-                  </div>
-                   <?php  
-                      
-                  }?>
-
- 
-                  
-               </div>
-               <div style="text-align: center;font-size:18px;cursor: pointer;color:grey; "><a class="btn btn-primary link_no-underline tag date_tag">Load More</a></div>
+               <input type="hidden" name="load_more" value="0" class="load_more">
+               <div class="column column-3"  id="test_div"></div>
+               <div style="text-align: center;font-size:18px;cursor: pointer;color:grey; "><a id="loadmore" class="btn btn-primary link_no-underline tag date_tag">Load More</a></div>
 
             </section>
          </div>

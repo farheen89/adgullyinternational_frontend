@@ -21,7 +21,7 @@ class Home_model extends CI_Model
 
 
  			 where a.publish_stat = 1 ORDER BY 
-             a.id DESC limit 40 ';  
+             a.id DESC limit 1 ';  
           $query     = $this->db->query($sql);
           return $query->result_array();
         }
@@ -45,5 +45,35 @@ class Home_model extends CI_Model
           $query     = $this->db->query($sql);
           return $query->result_array();
         }
+
+
+        public function getArticles($page, $id){
+		    $offset = 10*$page;
+		    $limit = 10;
+		   
+		     $sql = 'SELECT
+        	 a.id, 
+        	 a.title as title, 
+        	 a.content as content ,
+        	 a.publish_datetime as publish_datetime, 
+        	 a.category,c.name as category ,
+        	 s.name as subcategory,
+        	 s.id,
+        	 i.image_path
+        	 FROM article a 
+ 			 join category c on a.category = c.id
+ 			 left join subcategory s on a.subcategory = s.id 
+ 			 left join image_path i on a.id = i.article_id 
+
+
+ 			 where a.publish_stat = 1 ORDER BY 
+             a.id DESC limit '.$offset.','.$limit;  
+              $query     = $this->db->query($sql);
+          	return $query->result_array();
+          /*
+		    $result = $this->db->query($sql)->result();
+		    return $result;*/
+		}
+
 }
 ?>
