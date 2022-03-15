@@ -338,11 +338,13 @@
       url:"<?php echo base_url() ?>home/getArticle",
       type:'GET',
       data: {page:page}
-    }).done(function(response){
-      console.log(response);
-      if(response==1){ $("#loadmore").hide();}
-      $("#test_div").append(response); 
-      $(".load_more").val(load_more_value); 
+    }).done(function(response){ 
+      if(response==1){ 
+         $("#loadmore").hide();
+      }else{
+         $("#test_div").append(response); 
+         $(".load_more").val(load_more_value); 
+      }
       //scroll();
     });
   };
